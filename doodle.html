@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="doodle.css">
+    <title>Doodle Page</title>
+    <style>
+  
+    </style>
+</head>
+<body>
+    <div class="container">
+        <canvas id="doodleCanvas"></canvas>
+        <div class="frosted-glass"></div>
+        <div class="frosted-circle"></div>
+        <div class="frosted-circle2"></div>
+    </div>
+
+    <div class="slider-container">
+        <div class="slider-wrapper">
+            <button class="arrow arrow-left" onclick="scrollSlider(-200)">&#9665;</button>
+            <div class="slider" id="slider">
+                <a href="home.html">Home</a>
+                <a href="test.html">Page 1</a>
+                <a href="doodle.html">Page 2</a>
+                <a href="page3.html">Page 3</a>
+                <a href="page4.html">Page 4</a>
+                <a href="page5.html">Page 5</a>
+            </div>
+            <button class="arrow arrow-right" onclick="scrollSlider(200)">&#9655;</button>
+        </div>
+    </div>
+    
+    <script src="p5.js"></script>
+    <script src="https://unpkg.com/ml5@1/dist/ml5.min.js"></script>
+  <script src="doodle.js"></script>
+
+</body>
+</html>

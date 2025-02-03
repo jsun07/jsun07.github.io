@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
+  <title>Confession Camouflage</title>
+  <style>
+    body {
+      margin: 0;
+      color:white;
+      background-color: black;
+      overflow: hidden;
+      font-family: Arial, sans-serif;
+    }
+
+    #word-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none; /* Allows interaction with input field without interference */
+    }
+
+    .word {
+      position: absolute;
+      font-family: "Special Elite", serif;
+      color: rgba(255, 254, 254, 0.5); /* Semi-transparent black color */
+      font-size: 30px;
+      white-space: nowrap;
+      opacity: 0;
+      animation: typewriter 5s steps(50) infinite, moveWord 10s linear infinite;
+    }
+
+    /* Typewriter effect: words appear one by one from left to right */
+    @keyframes typewriter {
+      0% {
+        opacity: 1;
+        width: 0;
+      }
+      100% {
+        opacity: 1;
+        width: 100%;
+      }
+    }
+
+    /* Move the words from left to right */
+    @keyframes moveWord {
+      0% {
+        transform: translateX(-100vw);
+      }
+      100% {
+        transform: translateX(100vw);
+      }
+    }
+
+    #confession-input {
+  position: fixed;
+  bottom: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 10px;
+  font-size: 18px;
+  color: white; /* Text color white */
+  background-color: transparent; /* Make background transparent */
+  width: 60%;
+  border-radius: 5px;
+  border: 1px solid rgba(0, 0, 0, 0); /* Transparent border */
+}
+
+    #confession {
+      position: absolute;
+      bottom: 10%;
+      left: 50%;
+      transform: translateX(-50%);
+      color: rgba(0, 0, 0, 0.9); /* Slightly more opaque black for the confession text */
+      font-size: 20px;
+      font-family: "special elite",serif;
+      white-space: nowrap;
+      pointer-events: none;
+      opacity: 0.7;
+    }
+  </style>
+</head>
+<body>
+  <div id="word-container"></div>
+  <input type="text" id="confession-input" placeholder="Write your confession... don't worry no one will see... " />
+  <div id="confession"></div>
+
+  <script>
+    const wordContainer = document.getElementById('word-container');
+    const confessionInput = document.getElementById('confession-input');
+    const confessionDisplay = document.getElementById('confession');
+
+    const sentences = [
+      "I wish I could go back.",
+      "The truth is harder to find.",
+      "I still dream of you every night.",
+      "Sometimes, I just want to escape.",
+      "Life doesn't always make sense.",
+      "I haven't forgotten about that day.",
+      "The silence between us speaks volumes.",
+      "I miss the way things used to be.",
+      "I never told you how I felt.",
+      "What if I had made a different choice?",
+      "Fear holds me back every time.",
+      "I wish I could be brave.",
+      "There are things I should've said.",
+      "What if it's too late?",
+      "I’m afraid of being alone.",
+      "I wonder if you think of me.",
+      "I can’t shake this feeling.",
+      "Maybe one day, I’ll understand.",
+      "I’m hiding more than you think.",
+      "I don’t know where to go from here."
+    ];
+
+
+    let activeWords = []; // Track active words in the background
+const maxActiveWords = 20; // Limit number of active words
+
+// Function to remove words that are too old
+function removeOldWords() {
+  const words = document.querySelectorAll('.word');
+  
+  // Remove words that are off-screen or too old
+  words.forEach(word => {
+    if (parseFloat(word.style.opacity) <= 0 || parseFloat(word.style.left) > window.innerWidth) {
+      word.remove();
+    }
+  });
+
+  // Ensure we don't exceed the max active words
+  if (words.length > maxActiveWords) {
+    // Remove the earliest words to keep the number within the limit
+    const excessWords = words.length - maxActiveWords;
+    for (let i = 0; i < excessWords; i++) {
+      words[i].remove();
+    }
+  }
+}
+
+// Generate random sentences to move from left to right across the screen
+function createRandomSentences() {
+  for (let i = 0; i < 5; i++) {  // Increased rate of generation
+    const sentenceElement = document.createElement('div');
+    sentenceElement.classList.add('word');
+    sentenceElement.textContent = sentences[Math.floor(Math.random() * sentences.length)];
+    sentenceElement.style.top = `${Math.random() * 100}vh`; // Random vertical position
+    sentenceElement.style.fontSize = getRandomFontSize(); // Apply random font size
+    sentenceElement.style.animationDelay = `${Math.random() * 2}s`; // Random delay for each sentence's animation
+    wordContainer.appendChild(sentenceElement);
+  }
+  removeOldWords(); // Call the function to clean up old words
+}
+
+// Continuously create random sentences every 1.5 seconds for faster generation
+setInterval
+
+
+    // Function to update the confession in the background
+    function updateConfessionBackground() {
+      const confessionText = confessionInput.value;
+      const confessionElement = document.createElement('div');
+      confessionElement.classList.add('word');
+      confessionElement.textContent = confessionText;
+      confessionElement.style.top = `${Math.random() * 100}vh`; // Random vertical position for the confession
+      confessionElement.style.animationDelay = '0s'; // Instant appearance without delay
+      wordContainer.appendChild(confessionElement);
+    }
+
+    // Continuously create random sentences every 1.5 seconds for faster generation
+    setInterval(createRandomSentences, 1500);
+
+    // Update confession in the background when typing in the input bar
+    confessionInput.addEventListener('input', updateConfessionBackground);
+
+  </script>
+</body>
+</html>

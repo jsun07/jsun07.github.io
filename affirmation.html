@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Affirmation Repeater with Visualizer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f0f0f0;
+        }
+        #container {
+            position: relative;
+            text-align: center;
+        }
+        #affirmation {
+            padding: 10px;
+            font-size: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        #blob {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background-color: rgba(0, 150, 255, 0.6);
+            border-radius: 50%;
+            animation: float 2s ease-in-out infinite;
+            transform-origin: center;
+        }
+        @keyframes float {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <h1>Affirmation Repeater</h1>
+        <label for="affirmation">Enter your affirmation:</label>
+        <input type="text" id="affirmation" placeholder="I am confident!">
+        <button onclick="speakAffirmation()">Repeat Affirmation</button>
+        <div id="blob"></div>
+    </div>
+
+    <script>
+        let audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        let analyser = audioContext.createAnalyser();
+        let blob = document.getElementById('blob');
+        let sourceNode;
+
+        function speakAffirmation() {
+            const affirmation = document.getElementById('affirmation').value;
+            if (affirmation) {
+                const utterance = new SpeechSynthesisUtterance(affirmation);
+                speechSynthesis.speak(utterance);
+
+                // Capture the audio and create the visualizer
+                const stream = audioContext.createMediaStreamSource(new MediaStream());
+                sourceNode = audioContext.createMediaStreamSource(stream);
+                sourceNode.connect(analyser);
+                analyser.fftSize = 256;
+                let bufferLength = analyser.frequencyBinCount;
+                let dataArray = new Uint8Array(bufferLength);
+
+                function drawVisualizer() {
+                    analyser.getByteFrequencyData(dataArray);
+                    let sum = 0;
+                    for (let i = 0; i < bufferLength; i++) {
+                        sum += dataArray[i];
+                    }
+                    let average = sum / bufferLength;
+                    let scale = (average / 256) * 100;
+
+                    // Dynamically change the blob's size based on sound intensity
+                    blob.style.transform = `scale(${1 + scale / 200})`;
+                    requestAnimationFrame(drawVisualizer);
+                }
+
+                drawVisualizer();
+            } else {
+                alert('Please enter an affirmation!');
+            }
+        }
+    </script>
+</body>
+</html>

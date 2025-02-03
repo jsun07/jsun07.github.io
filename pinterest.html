@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Manifestation Vision Board</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f8f8f8;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+        #board {
+            width: 100%;
+            height: 100%;
+            background-color: #fff;
+            border: 2px solid #ccc;
+            position: relative;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .board-item {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            margin: 15px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+            cursor: move;
+        }
+        .board-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease-in-out;
+        }
+        .board-item img:hover {
+            transform: scale(1.05);
+        }
+        .sticker {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 30px;
+            cursor: pointer;
+        }
+        #upload-area {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: #4caf50;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 10;
+        }
+        #save-board {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background-color: #ff5722;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 10;
+        }
+        input[type="file"] {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="upload-area">
+        <label for="upload-image">Upload Image</label>
+        <input type="file" id="upload-image" accept="image/*" onchange="addImage(event)">
+    </div>
+    <div id="save-board" onclick="saveBoard()">Save Board</div>
+
+    <div id="board">
+        <!-- Uploaded images and stickers will be added here -->
+    </div>
+
+    <script>
+        // Function to add image to the board
+        function addImage(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const boardContainer = document.getElementById('board');
+
+                    const item = document.createElement('div');
+                    item.classList.add('board-item');
+                    item.setAttribute('draggable', 'true');
+                    item.ondragstart = handleDragStart;
+                    item.ondragover = handleDragOver;
+                    item.ondrop = handleDrop;
+
+                    const image = document.createElement('img');
+                    image.src = e.target.result;
+                    item.appendChild(image);
+
+                    // Adding a random sticker
+                    const sticker = document.createElement('div');
+                    sticker.classList.add('sticker');
+                    sticker.innerText = "💫";
+                    sticker.onclick = function () {
+                        this.remove();
+                    };
+                    item.appendChild(sticker);
+
+                    boardContainer.appendChild(item);
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // Drag-and-drop functionality
+        let draggedItem = null;
+
+        function handleDragStart(event) {
+            draggedItem = event.target;
+        }
+
+        function handleDragOver(event) {
+            event.preventDefault();
+        }
+
+        function handleDrop(event) {
+            event.preventDefault();
+            if (event.target.classList.contains('board-item')) {
+                event.target.appendChild(draggedItem);
+            }
+        }
+
+        // Function to save the board as an image
+        function saveBoard() {
+            html2canvas(document.getElementById('board')).then(function(canvas) {
+                const link = document.createElement('a');
+                link.href = canvas.toDataURL();
+                link.download = 'manifestation-board.png';
+                link.click();
+            });
+        }
+    </script>
+
+</body>
+</html>
