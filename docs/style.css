@@ -1,0 +1,253 @@
+body {
+  font-family: "Special Elite", serif;
+  background-image: url('bb.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  color: #fff;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;  
+}
+
+#thought-container {
+position: relative;
+width: 100%;
+height: 100vh;
+overflow: hidden;
+}
+
+.bubble {
+position: absolute;
+display: flex;
+justify-content: center;
+align-items: center;
+padding: 15px;
+background: rgba(255, 255, 255, 0.3);
+backdrop-filter: blur(2px) contrast(6) saturate(7);
+color: #615a5a;
+border: 2px solid rgba(0, 0, 0, 0.3);
+border-radius: 50%;
+box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+font-family: "Special Elite", serif;
+font-size: 50px;
+text-align: center;
+white-space: normal; 
+word-wrap: break-word;
+overflow: hidden;
+cursor: pointer;
+transition: transform 0.2s ease-in-out, backdrop-filter 0.3s ease-in-out;
+animation: floatUpFade 10s linear forwards;
+z-index: 11;
+bottom: 0;
+background-color: rgba(255, 255, 255, 0.7);
+opacity: 0.2;
+}
+
+@keyframes floatUpFade {
+0% {
+  transform: translateY(0);
+  opacity: 1;
+}
+80% {
+  transform: translateY(-80vh);
+  opacity: 1;
+}
+100% {
+  transform: translateY(-100vh);
+  opacity: 1;
+}
+}
+
+.bubble:hover {
+transform: scale(1.2);
+backdrop-filter: blur(1px) contrast(16) saturate(3);
+}
+
+.popped-text {
+position: absolute;
+color: rgba(255, 255, 255, 0.381);
+font-size: 50px;
+font-family: "Special Elite", serif;
+font-weight: bold;
+pointer-events: none; 
+}
+
+@keyframes float {
+0% {
+  transform: translateY(100%);
+  opacity: 1;
+}
+50%{
+  opacity:1;
+}
+100% {
+  transform: translateY(-150%);
+  opacity: 0;
+}
+}
+
+#input-container {
+position: fixed;
+bottom: 460px;
+left: 50%;
+font-family: "Special Elite", serif;
+transform: translateX(-50%);
+width: 90%;
+max-width: 400px;
+display: flex;
+gap: 10px;
+}
+
+input[type="text"] {
+flex-grow: 1;
+padding: 10px;
+font-family: "Special Elite", serif;
+border: none;
+border-radius: 10px;
+font-size: 16px;
+background-color: rgba(132, 132, 132, 0.2);
+color: #fff;
+backdrop-filter: blur(5px);
+box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+input[type="text"]::placeholder {
+color: rgba(255, 255, 255, 0.7);
+}
+
+input[type="text"]:focus {
+outline: none;
+background-color: rgba(199, 199, 199, 0.3);
+}
+
+button {
+padding: 10px 20px;
+background-color: #969696a4;
+color: white;
+border: none;
+border-radius: 10px;
+font-family: "Special Elite", serif;
+font-size: 16px;
+cursor: pointer;
+transition: background 0.3s;
+}
+
+button:hover {
+background-color: #ced0df;
+}
+
+#background-bubbles {
+position: absolute;
+bottom: 0;
+left: 0;
+width: 100%;
+height: 100%;
+z-index: -1;
+}
+
+@keyframes floatBubble {
+0% {
+  transform: translateY(0) scale(1);
+}
+100% {
+  transform: translateY(-100vh) scale(1.2);
+}
+}
+
+body {
+margin: 0;
+padding: 0;
+font-family: Arial, sans-serif;
+background-color: #f4f4f4;
+}
+
+.slider-container {
+position: fixed;
+bottom: 0;
+left: 0;
+width: 100%;
+background: transparent;
+padding: 15px 0;
+display: flex;
+align-items: center;
+justify-content: center;
+box-shadow: none;
+backdrop-filter: none;
+border-top: none;
+z-index:0;
+}
+
+.slider-wrapper {
+display: flex;
+align-items: center;
+position: relative;
+width: 80%;
+}
+
+.slider {
+display: flex;
+overflow-x: scroll;
+scroll-behavior: smooth;
+flex: 1;
+padding: 10px;
+border-radius: 10px;
+scrollbar-width: none;
+}
+
+.slider::-webkit-scrollbar {
+display: none;
+}
+
+.slider a {
+min-width: 160px;
+text-align: center;
+padding: 12px 20px;
+background: transparent;
+margin: 5px;
+border-radius: 25px;
+text-decoration: none;
+color: rgb(255, 255, 255);
+font-weight: bold;
+transition: transform 0.3s ease, background 0.3s ease;
+border: none;
+}
+
+.slider a:hover {
+transform: scale(1.1);
+background: rgba(255, 255, 255, 0.2);
+}
+
+.arrow {
+cursor: pointer;
+color: white;
+border: none;
+padding: 10px;
+border-radius: 50%;
+font-size: 20px;
+position: absolute;
+top: 50%;
+transform: translateY(-50%);
+}
+
+.arrow-left {
+left: -40px;
+background:none;
+}
+
+.arrow-right {
+right: -40px;
+background:none;
+}
+
+#background-filter {
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background: rgba(0, 0, 0, 0.2);
+backdrop-filter: blur(10px) saturate(3);
+z-index: -1;
+}

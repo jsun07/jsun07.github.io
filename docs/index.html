@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>H</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      color: #000;
+      background-image: url('inkk.jpg'); 
+      background-size: cover; 
+      background-position: center; 
+      background-attachment: fixed; 
+      height: 100vh;
+      position: relative;
+    }
+
+    body::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(255, 255, 255, 0.2); 
+      backdrop-filter: blur(10px);
+      z-index: 0; 
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+      position: relative; 
+      z-index: 1; 
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 50px;
+    }
+
+    header .nav-links a {
+      text-decoration: none;
+      color: #000000; 
+      margin-left: 15px;
+      font-size: 17px;
+    }
+
+    .intro {
+      font-size: 46px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      color: #000000; 
+    }
+
+    .subtext {
+      font-size: 28px;
+      color: #000000; 
+      margin-bottom: 40px;
+    }
+
+    .highlight-circle {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background-color: red;
+      position: absolute;
+      animation: floatAround 5s infinite ease-in-out;
+    }
+
+    @keyframes floatAround {
+      0% {
+        transform: translate(0, 0);
+      }
+      25% {
+        transform: translate(300px, -200px);
+      }
+      50% {
+        transform: translate(600px, 100px);
+      }
+      75% {
+        transform: translate(200px, 400px);
+      }
+      100% {
+        transform: translate(0, 0);
+      }
+    }
+
+    .image-section img {
+      width: 100%;
+      max-width: 600px;
+      display: block;
+    }
+
+    .slider-container {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: transparent;
+      padding: 15px 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: none;
+      z-index: 2; 
+    }
+
+    .slider-wrapper {
+      display: flex;
+      align-items: center;
+      position: relative;
+      width: 80%;
+    }
+
+    .slider {
+      display: flex;
+      overflow-x: scroll;
+      scroll-behavior: smooth;
+      flex: 1;
+      padding: 10px;
+      border-radius: 10px;
+      scrollbar-width: none;
+    }
+
+    .slider::-webkit-scrollbar {
+      display: none;
+    }
+
+    .slider a {
+      min-width: 160px;
+      text-align: center;
+      padding: 12px 20px;
+      background: transparent;
+      margin: 5px;
+      border-radius: 25px;
+      text-decoration: none;
+      color: rgb(0, 0, 0);
+      font-weight: bold;
+      transition: transform 0.3s ease, background 0.3s ease;
+      border: none;
+    }
+
+    .slider a:hover {
+      transform: scale(1.1);
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .arrow {
+      cursor: pointer;
+      color: rgb(0, 0, 0);
+      border: none;
+      padding: 10px;
+      border-radius: 50%;
+      font-size: 20px;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .arrow-left {
+      left: -40px;
+      background: none;
+    }
+
+    .arrow-right {
+      right: -40px;
+      background: none;
+    }
+
+  
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="brand">
+        <span style="font-size: 18x;">2025</span>
+      </div>
+      <div class="nav-links">
+        <a href="#">enjoy</a>
+        <a href="#">the</a>
+        <a href="#">experience</a>
+        <a href="#">!</a>
+      </div>
+    </header>
+    <div class="content">
+      <div class="intro">
+        HELLO,<br>WELCOME,<br>TO YOUR DIGITAL JOURNAL.
+      </div>
+      <div class="subtext">Follow the timeline underneath and continue the journey by visiting each star </div>
+      <div class="image-section">
+        <div class="highlight-circle"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slider-container">
+    <div class="slider-wrapper">
+      <button class="arrow arrow-left" onclick="scrollSlider(-200)">&#9665;</button>
+      <div class="slider" id="slider">
+        <a href="index.html">H</a>
+        <a href="test.html">&#9734</a>
+        <a href="doodle.html">&#9734</a>
+        <a href="photo2.html">&#9734</a>
+        <a href="confession.html">&#9734</a>
+        <a href="affirmation.html">&#9734</a>
+      </div>
+      <button class="arrow arrow-right" onclick="scrollSlider(200)">&#9655;</button>
+    </div>
+  </div>
+
+  <script src="index.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
+  <title>C</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+      font-weight: bold;
+      background-color: #030007;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    #word-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    .word {
+      position: absolute;
+      color: rgba(255, 255, 255, 0.5);
+      background: rgba(32, 2, 43, 0.202);
+      font-size: 30px;
+      white-space: nowrap;
+      opacity: 0.5;
+      animation: typewriter 5s steps(50) infinite, moveWord 10s linear infinite;
+      filter: blur(1px) grayscale(20%) skew(-5deg);
+    }
+
+    @keyframes typewriter {
+      0% {
+        opacity: 1;
+        width: 0;
+      }
+      100% {
+        opacity: 1;
+        width: 100%;
+      }
+    }
+
+    @keyframes moveWord {
+      0% {
+        transform: translateX(-100vw);
+      }
+      100% {
+        transform: translateX(100vw);
+      }
+    }
+
+    #confession-input {
+      position: fixed;
+      bottom: 10%;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 10px;
+      font-size: 18px;
+      width: 60%;
+      border-radius: 5px;
+      background-color: rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    #confession {
+      position: absolute;
+      bottom: 10%;
+      left: 50%;
+      transform: translateX(-50%);
+      color: rgba(0, 0, 0, 0.7);
+      font-size: 20px;
+      font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+      font-weight: bold;
+      white-space: nowrap;
+      pointer-events: none;
+      opacity: 0.7;
+    }
+
+    body:hover #word-container .word {
+      opacity: 0.1;
+    }
+
+    body:hover #confession {
+      opacity: 1;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: "Anonymous Pro", serif;
+    }
+
+    .slider-container {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: transparent;
+      padding: 15px 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: none;
+      backdrop-filter: none;
+      border-top: none;
+      z-index:0;
+    }
+
+    .slider-wrapper {
+      display: flex;
+      align-items: center;
+      position: relative;
+      width: 80%;
+    }
+
+    .slider {
+      display: flex;
+      overflow-x: scroll;
+      scroll-behavior: smooth;
+      flex: 1;
+      padding: 10px;
+      border-radius: 10px;
+      scrollbar-width: none;
+    }
+
+    .slider::-webkit-scrollbar {
+      display: none;
+    }
+
+    .slider a {
+      min-width: 160px;
+      text-align: center;
+      padding: 12px 20px;
+      background: transparent;
+      margin: 5px;
+      border-radius: 25px;
+      text-decoration: none;
+      color: rgb(255, 255, 255);
+      font-weight: bold;
+      transition: transform 0.3s ease, background 0.3s ease;
+      border: none;
+    }
+
+    .slider a:hover {
+      transform: scale(1.1);
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .arrow {
+      cursor: pointer;
+      color: white;
+      border: none;
+      padding: 10px;
+      border-radius: 50%;
+      font-size: 20px;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .arrow-left {
+      left: -40px;
+      background:none;
+    }
+
+    .arrow-right {
+      right: -40px;
+      background:none;
+    }
+
+  </style>
+</head>
+<body>
+  <div id="word-container"></div>
+  <input type="text" id="confession-input" placeholder="Write your confession...it's somewhat confidential..." />
+  <div id="confession"></div>
+
+  <script>
+    const wordContainer = document.getElementById('word-container');
+    const confessionInput = document.getElementById('confession-input');
+    const confessionDisplay = document.getElementById('confession');
+
+    const sentences = [
+      "I wish I could go back.",
+      "The truth is harder to find.",
+      "I still dream of you every night.",
+      "Sometimes, I just want to escape.",
+      "Life doesn't always make sense.",
+      "I haven't forgotten about that day.",
+      "The silence between us speaks volumes.",
+      "I miss the way things used to be.",
+      "I never told you how I felt.",
+      "What if I had made a different choice?",
+      "Fear holds me back every time.",
+      "I wish I could be brave.",
+      "There are things I should've said.",
+      "What if it's too late?",
+      "I’m afraid of being alone.",
+      "I wonder if you think of me.",
+      "I can’t shake this feeling.",
+      "Maybe one day, I’ll understand.",
+      "I’m hiding more than you think.",
+      "I don’t know where to go from here.",
+      "Life is odd."
+    ];
+
+    let activeWords = [];
+    const maxActiveWords = 20;
+
+    function createRandomSentences() {
+      if (activeWords.length >= maxActiveWords) {
+        return;
+      }
+
+      for (let i = 0; i < 5; i++) {
+        const sentenceElement = document.createElement('div');
+        sentenceElement.classList.add('word');
+        sentenceElement.textContent = sentences[Math.floor(Math.random() * sentences.length)];
+        sentenceElement.style.top = `${Math.random() * 100}vh`;
+        sentenceElement.style.animationDelay = `${Math.random() * 2}s`;
+        wordContainer.appendChild(sentenceElement);
+        activeWords.push(sentenceElement);
+      }
+
+      removeOldWords();
+    }
+
+    function updateConfessionBackground() {
+      const confessionText = confessionInput.value;
+      const confessionElement = document.createElement('div');
+      confessionElement.classList.add('word');
+      confessionElement.textContent = confessionText;
+      confessionElement.style.top = `${Math.random() * 100}vh`;
+      confessionElement.style.animationDelay = '0s';
+      wordContainer.appendChild(confessionElement);
+      activeWords.push(confessionElement);
+    }
+
+    function removeOldWords() {
+      activeWords.forEach((word, index) => {
+        if (word.getBoundingClientRect().left > window.innerWidth || word.style.opacity == '0.1') {
+          wordContainer.removeChild(word);
+          activeWords.splice(index, 1);
+        }
+      });
+    }
+
+    setInterval(createRandomSentences, 1500);
+
+    confessionInput.addEventListener('input', updateConfessionBackground);
+
+    setInterval(removeOldWords, 1000);
+
+    const slider = document.getElementById("slider");
+    const scrollSpeed = 5;
+    const threshold = 80;
+    function scrollSlider(amount) {
+        slider.scrollBy({ left: amount, behavior: 'smooth' });
+    }
+    slider.addEventListener("mousemove", (event) => {
+        const { offsetWidth, scrollWidth, scrollLeft } = slider;
+        const mouseX = event.clientX;
+        if (mouseX < threshold && scrollLeft > 0) {
+            slider.scrollLeft -= scrollSpeed;
+        } else if (mouseX > offsetWidth - threshold && scrollLeft < scrollWidth - offsetWidth) {
+            slider.scrollLeft += scrollSpeed;
+        }
+    });
+    slider.addEventListener("mouseleave", () => {
+        slider.scrollLeft = 0;
+    });
+  </script>
+
+  <div class="slider-container">
+    <div class="slider-wrapper">
+      <button class="arrow arrow-left" onclick="scrollSlider(-200)">&#9665;</button>
+      <div class="slider" id="slider">
+        <a href="index.html">H</a>
+        <a href="test.html">b</a>
+        <a href="doodle.html">d</a>
+        <a href="photo2.html">p</a>
+        <a href="confession.html">c</a>
+        <a href="affirmation.html">&#9734</a>
+      </div>
+      <button class="arrow arrow-right" onclick="scrollSlider(200)">&#9655;</button>
+    </div>
+  </div>
+</body>
+</html>
